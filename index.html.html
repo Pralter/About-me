@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pra— A Journey Through Time</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ===== RESET & ROOT ===== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --night-bg: #050a1a;
+  --night-mid: #0a1628;
+  --night-accent: #1a2a4a;
+  --gold: #c9a84c;
+  --silver: #b0b8c9;
+  --text-night: #e8dfc8;
+  --text-day: #1a1a2e;
+  --locked-color: #3a4a6a;
+  --locked-glow: #4a5a8a;
+  --font-display: 'Cinzel', serif;
+  --font-body: 'Cormorant Garamond', serif;
+  --font-mono: 'Space Mono', monospace;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--night-bg);
+  color: var(--text-night);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* ===== HIDE RADIO INPUTS ===== */
+input[type="radio"] { display: none; }
+
+/* ===== SKY / BACKGROUND LAYER ===== */
+.sky-gradient {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background: linear-gradient(180deg, #050a1a 0%, #0a1628 50%, #1a2a4a 100%);
+  transition: background 1.5s ease;
+}
+
+/* ===== STARS (CSS-only, no JS) ===== */
+.stars-layer {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  transition: opacity 1.5s ease;
+}
+
+/* Generate stars using pseudo-elements + box-shadow trick */
+.stars-layer::before,
+.stars-layer::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 1px; height: 1px;
+  background: transparent;
+  border-radius: 50%;
+  animation: twinkle-field 8s ease-in-out infinite alternate;
+}
+
+/* Large star cluster */
+.stars-layer::before {
+  box-shadow:
+    120px 34px 0 1px rgba(255,255,255,0.8),
+    340px 78px 0 0.5px rgba(255,255,255,0.6),
+    560px 20px 0 1.5px rgba(255,255,255,0.9),
+    80px 150px 0 1px rgba(255,255,255,0.5),
+    900px 45px 0 0.5px rgba(255,255,255,0.7),
+    1100px 130px 0 1px rgba(255,255,255,0.6),
+    230px 200px 0 0.5px rgba(255,255,255,0.4),
+    670px 90px 0 1.5px rgba(255,255,255,0.8),
+    1300px 60px 0 0.5px rgba(255,255,255,0.5),
+    400px 180px 0 1px rgba(255,255,255,0.7),
+    750px 250px 0 0.5px rgba(255,255,255,0.4),
+    50px 280px 0 1px rgba(255,255,255,0.6),
+    1200px 220px 0 0.5px rgba(255,255,255,0.8),
+    480px 300px 0 1px rgba(255,255,255,0.3),
+    820px 170px 0 1.5px rgba(255,255,255,0.7),
+    160px 400px 0 0.5px rgba(255,255,255,0.5),
+    990px 350px 0 1px rgba(255,255,255,0.6),
+    1350px 290px 0 0.5px rgba(255,255,255,0.4),
+    610px 420px 0 1px rgba(255,255,255,0.7),
+    1050px 400px 0 1.5px rgba(255,255,255,0.5),
+    280px 500px 0 0.5px rgba(255,255,255,0.6),
+    720px 480px 0 1px rgba(255,255,255,0.4),
+    1180px 460px 0 0.5px rgba(255,255,255,0.8),
+    430px 550px 0 1px rgba(255,255,255,0.3),
+    880px 520px 0 1.5px rgba(255,255,255,0.7),
+    90px 600px 0 0.5px rgba(255,255,255,0.5),
+    1400px 580px 0 1px rgba(255,255,255,0.6),
+    530px 640px 0 0.5px rgba(255,255,255,0.4),
+    960px 620px 0 1px rgba(255,255,255,0.7),
+    190px 700px 0 1.5px rgba(255,255,255,0.5),
+    770px 680px 0 0.5px rgba(255,255,255,0.6),
+    1260px 660px 0 1px rgba(255,255,255,0.3),
+    380px 750px 0 0.5px rgba(255,255,255,0.8),
+    840px 730px 0 1px rgba(255,255,255,0.5),
+    1120px 720px 0 1.5px rgba(255,255,255,0.7),
+    30px 800px 0 0.5px rgba(255,255,255,0.4),
+    650px 800px 0 1px rgba(255,255,255,0.6),
+    1010px 790px 0 0.5px rgba(255,255,255,0.5);
+  animation: twinkle-field 8s ease-in-out infinite alternate;
+}
+
+/* Smaller/dimmer second cluster */
+.stars-layer::after {
+  box-shadow:
+    210px 55px 0 0.5px rgba(255,255,255,0.3),
+    460px 110px 0 1px rgba(255,255,255,0.5),
+    690px 30px 0 0.5px rgba(255,255,255,0.4),
+    1160px 85px 0 1px rgba(255,255,255,0.6),
+    320px 160px 0 0.5px rgba(255,255,255,0.3),
+    580px 220px 0 1px rgba(255,255,255,0.5),
+    930px 190px 0 0.5px rgba(255,255,255,0.4),
+    1310px 145px 0 1px rgba(255,255,255,0.3),
+    100px 320px 0 0.5px rgba(255,255,255,0.5),
+    740px 340px 0 1px rgba(255,255,255,0.4),
+    1070px 300px 0 0.5px rgba(255,255,255,0.6),
+    1440px 380px 0 1px rgba(255,255,255,0.3),
+    260px 440px 0 0.5px rgba(255,255,255,0.4),
+    620px 460px 0 1px rgba(255,255,255,0.5),
+    1000px 430px 0 0.5px rgba(255,255,255,0.3),
+    1380px 490px 0 1px rgba(255,255,255,0.6),
+    150px 560px 0 0.5px rgba(255,255,255,0.4),
+    500px 590px 0 1px rgba(255,255,255,0.3),
+    860px 570px 0 0.5px rgba(255,255,255,0.5),
+    1230px 540px 0 1px rgba(255,255,255,0.4),
+    40px 650px 0 0.5px rgba(255,255,255,0.6),
+    390px 670px 0 1px rgba(255,255,255,0.3),
+    790px 650px 0 0.5px rgba(255,255,255,0.5),
+    1140px 700px 0 1px rgba(255,255,255,0.4),
+    1430px 730px 0 0.5px rgba(255,255,255,0.3),
+    220px 780px 0 1px rgba(255,255,255,0.5),
+    570px 810px 0 0.5px rgba(255,255,255,0.4),
+    950px 850px 0 1px rgba(255,255,255,0.3),
+    1290px 820px 0 0.5px rgba(255,255,255,0.6);
+  animation: twinkle-field 11s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes twinkle-field {
+  0%   { opacity: 0.4; }
+  50%  { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+
+/* Individual twinkling stars via nth-child-like repetition using extra divs */
+.star {
+  position: absolute;
+  border-radius: 50%;
+  background: white;
+}
+
+/* ===== MOON ===== */
+.moon {
+  position: fixed;
+  top: 60px; right: 120px;
+  width: 70px; height: 70px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #f5ecd0, #d4c48a);
+  box-shadow: 0 0 30px rgba(240,230,200,0.4), 0 0 60px rgba(240,230,200,0.15);
+  z-index: 2;
+  transition: opacity 1.5s ease, transform 1.5s ease;
+  pointer-events: none;
+}
+
+/* ===== SUN ===== */
+.sun {
+  position: fixed;
+  top: 50px; right: 100px;
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 40%, #ffe066, #f4a83a);
+  box-shadow: 0 0 40px rgba(244,168,58,0.5), 0 0 80px rgba(244,168,58,0.2);
+  z-index: 2;
+  opacity: 0;
+  transform: translateY(60px);
+  transition: opacity 1.5s ease, transform 1.5s ease;
+  pointer-events: none;
+}
+
+/* ===== SHOOTING STARS ===== */
+.shooting-star {
+  position: fixed;
+  width: 2px; height: 2px;
+  background: white;
+  border-radius: 50%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  animation: shoot var(--shoot-dur, 8s) linear infinite;
+  animation-delay: var(--shoot-delay, 0s);
+}
+@keyframes shoot {
+  0%   { opacity: 0; transform: translate(0,0); }
+  5%   { opacity: 1; }
+  40%  { opacity: 0; transform: translate(400px, 200px); }
+  100% { opacity: 0; transform: translate(400px, 200px); }
+}
+
+/* ===== NAVIGATION ===== */
+nav.main-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  padding: 1.2rem 2rem;
+  background: rgba(5,10,26,0.7);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(200,170,100,0.15);
+  transition: background 1.5s ease, border-color 1.5s ease;
+}
+
+.nav-track {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.nav-label {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  padding: 0.5rem 1.8rem;
+  background: transparent;
+  border: 1px solid rgba(200,170,100,0.25);
+  color: rgba(200,170,100,0.55);
+  cursor: pointer;
+  transition: all 0.4s ease;
+  position: relative;
+  text-transform: uppercase;
+  user-select: none;
+}
+.nav-label:first-of-type { border-radius: 4px 0 0 4px; }
+.nav-label:last-of-type  { border-radius: 0 4px 4px 0; }
+.nav-label + .nav-label  { border-left: none; }
+
+.nav-label::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 50%;
+  transform: translateX(-50%);
+  width: 0; height: 2px;
+  background: var(--gold);
+  transition: width 0.3s ease;
+}
+
+/* ===== SECTION PANELS — default hidden ===== */
+.panel {
+  display: none;
+  min-height: 100vh;
+  position: relative;
+  z-index: 2;
+}
+
+/* ===== RADIO-DRIVEN STATE ===== */
+/* PAST active */
+#state-past:checked ~ .sky-gradient {
+  background: linear-gradient(180deg, #050a1a 0%, #0a1628 50%, #1a2a4a 100%);
+}
+#state-past:checked ~ .moon  { opacity: 1; transform: translateY(0); }
+#state-past:checked ~ .sun   { opacity: 0; transform: translateY(60px); }
+#state-past:checked ~ .stars-layer { opacity: 1; }
+#state-past:checked ~ nav.main-nav { background: rgba(5,10,26,0.7); border-bottom-color: rgba(200,170,100,0.15); }
+#state-past:checked ~ nav.main-nav .nav-label[for="state-past"] {
+  background: rgba(200,170,100,0.18);
+  color: var(--gold);
+  border-color: var(--gold);
+}
+#state-past:checked ~ nav.main-nav .nav-label[for="state-past"]::after { width: 60%; }
+#state-past:checked ~ #panel-past { display: block; }
+
+/* PRESENT active */
+#state-present:checked ~ .sky-gradient {
+  background: linear-gradient(180deg, #87ceeb 0%, #d4eaf7 60%, #fff7e6 100%);
+}
+#state-present:checked ~ .moon  { opacity: 0; transform: translateY(-80px); }
+#state-present:checked ~ .sun   { opacity: 1; transform: translateY(0); }
+#state-present:checked ~ .stars-layer { opacity: 0; }
+#state-present:checked ~ nav.main-nav { background: rgba(200,230,250,0.7); border-bottom-color: rgba(30,100,180,0.15); }
+#state-present:checked ~ nav.main-nav .nav-label { color: rgba(30,100,180,0.5); border-color: rgba(30,100,180,0.2); }
+#state-present:checked ~ nav.main-nav .nav-label[for="state-present"] {
+  background: rgba(30,100,180,0.15);
+  color: #185fa5;
+  border-color: #185fa5;
+}
+#state-present:checked ~ nav.main-nav .nav-label[for="state-present"]::after { width: 60%; background: #185fa5; }
+#state-present:checked ~ #panel-present { display: block; }
+/* Present: light theme */
+#state-present:checked ~ #panel-present { color: var(--text-day); }
+
+/* FUTURE active */
+#state-future:checked ~ .sky-gradient {
+  background: linear-gradient(180deg, #050a1a 0%, #0a1628 50%, #1a2a4a 100%);
+}
+#state-future:checked ~ .moon  { opacity: 1; transform: translateY(0); }
+#state-future:checked ~ .sun   { opacity: 0; transform: translateY(60px); }
+#state-future:checked ~ .stars-layer { opacity: 1; }
+#state-future:checked ~ nav.main-nav { background: rgba(5,10,26,0.7); border-bottom-color: rgba(200,170,100,0.15); }
+#state-future:checked ~ nav.main-nav .nav-label[for="state-future"] {
+  background: rgba(200,170,100,0.18);
+  color: var(--gold);
+  border-color: var(--gold);
+}
+#state-future:checked ~ nav.main-nav .nav-label[for="state-future"]::after { width: 60%; }
+#state-future:checked ~ #panel-future { display: block; }
+
+/* ===== SECTION INNER ===== */
+.section-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 7rem 2rem 5rem;
+}
+
+/* ===== FADE-UP ANIMATION ===== */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-up {
+  animation: fadeUp 0.7s ease both;
+  animation-delay: var(--fd, 0s);
+}
+
+/* ===== PULSE CUE ===== */
+@keyframes pulse-cue {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.7; }
+}
+
+/* ===== HERO ===== */
+.hero { text-align: center; padding-top: 8rem; }
+.hero-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  opacity: 0.7;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+}
+.hero-name {
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 7vw, 5.5rem);
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  line-height: 1.1;
+  color: var(--text-night);
+  text-shadow: 0 0 60px rgba(200,170,100,0.2);
+  margin-bottom: 1rem;
+}
+.hero-sub {
+  font-family: var(--font-body);
+  font-size: 1.4rem;
+  font-style: italic;
+  color: var(--silver);
+  font-weight: 300;
+  margin-bottom: 3rem;
+}
+.scroll-cue {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  color: var(--gold);
+  opacity: 0.5;
+  text-transform: uppercase;
+  margin-top: 3rem;
+  animation: pulse-cue 2.5s ease-in-out infinite;
+}
+
+/* ===== SECTION HEADINGS ===== */
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  opacity: 0.6;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  color: var(--text-night);
+  margin-bottom: 3rem;
+  border-bottom: 1px solid rgba(200,170,100,0.15);
+  padding-bottom: 1rem;
+}
+
+/* PRESENT overrides */
+#panel-present .section-label  { color: #185fa5; }
+#panel-present .section-title  { color: var(--text-day); border-bottom-color: rgba(30,100,180,0.15); }
+#panel-present .hero-eyebrow   { color: #185fa5; }
+
+/* ===== STAR DIVIDER ===== */
+.star-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 3rem 0;
+  opacity: 0.3;
+}
+.star-divider::before, .star-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: currentColor;
+}
+.star-divider span {
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  font-family: var(--font-mono);
+}
+
+/* ===== TIMELINE ===== */
+.timeline { position: relative; padding-left: 2.5rem; }
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 8px; top: 8px; bottom: 8px;
+  width: 1px;
+  background: linear-gradient(to bottom, rgba(200,170,100,0.5), rgba(200,170,100,0.05));
+}
+.timeline-item { position: relative; margin-bottom: 3rem; }
+.timeline-dot {
+  position: absolute;
+  left: -2.5rem; top: 6px;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  border: 1.5px solid var(--gold);
+  background: var(--night-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.timeline-dot::after {
+  content: '';
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+.timeline-year {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: var(--gold);
+  opacity: 0.7;
+  margin-bottom: 0.3rem;
+}
+.timeline-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+  color: var(--text-night);
+  margin-bottom: 0.4rem;
+}
+.timeline-desc {
+  font-size: 1.05rem;
+  font-style: italic;
+  color: var(--silver);
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+/* ===== PEOPLE GRID ===== */
+.people-era-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0.5;
+  margin: 2.5rem 0 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.people-era-label::before, .people-era-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(200,170,100,0.15);
+}
+.people-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+  max-width:70%;
+  justify-self: center;
+}
+.person-card {
+  border: 1px solid rgba(200,170,100,0.18);
+  border-radius: 8px;
+  padding: 1.5rem;
+  background: rgba(255,255,255,0.03);
+  transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s ease;
+}
+.person-card:hover {
+  border-color: rgba(200,170,100,0.4);
+  background: rgba(200,170,100,0.05);
+  transform: translateY(-3px);
+}
+.person-avatar {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: rgba(200,170,100,0.15);
+  border: 1px solid rgba(200,170,100,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--gold);
+  margin-bottom: 1rem;
+  letter-spacing: 0.05em;
+}
+.person-name {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  letter-spacing: 0.06em;
+  color: var(--text-night);
+  margin-bottom: 0.2rem;
+}
+.person-tag {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  color: var(--gold);
+  opacity: 0.6;
+  text-transform: uppercase;
+  margin-bottom: 0.8rem;
+}
+.person-note {
+  font-size: 0.95rem;
+  font-style: italic;
+  color: var(--silver);
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+/* ===== PRESENT PANEL OVERRIDES ===== */
+#panel-present {
+  background: transparent;
+}
+#panel-present .person-card {
+  border-color: rgba(30,100,180,0.15);
+  background: rgba(255,255,255,0.5);
+}
+#panel-present .person-card:hover {
+  border-color: rgba(30,100,180,0.35);
+  background: rgba(255,255,255,0.8);
+}
+#panel-present .person-avatar {
+  background: rgba(30,100,180,0.1);
+  border-color: rgba(30,100,180,0.25);
+  color: #185fa5;
+}
+#panel-present .person-name { color: var(--text-day); }
+#panel-present .person-tag  { color: #185fa5; }
+#panel-present .person-note { color: #4a6a8a; }
+#panel-present .people-era-label { color: #185fa5; }
+#panel-present .people-era-label::before,
+#panel-present .people-era-label::after { background: rgba(30,100,180,0.12); }
+#panel-present .timeline-dot  { border-color: #185fa5; }
+#panel-present .timeline-dot::after { background: #185fa5; }
+#panel-present .timeline-year { color: #185fa5; }
+#panel-present .timeline-title { color: var(--text-day); }
+#panel-present .timeline-desc { color: #4a6a8a; }
+#panel-present .star-divider { color: #185fa5; }
+
+/* ===== HOBBY CARDS (Present) ===== */
+.hobby-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.2rem;
+  margin-bottom: 3rem;
+}
+.hobby-card {
+  border: 1px solid rgba(30,100,180,0.18);
+  border-radius: 8px;
+  padding: 1.3rem;
+  background: rgba(255,255,255,0.4);
+  backdrop-filter: blur(4px);
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+.hobby-card:hover {
+  transform: translateY(-4px);
+  background: rgba(255,255,255,0.7);
+}
+.hobby-icon { font-size: 1.5rem; margin-bottom: 0.6rem; }
+.hobby-title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--text-day);
+  margin-bottom: 0.3rem;
+  letter-spacing: 0.05em;
+}
+.hobby-desc {
+  font-size: 0.9rem;
+  font-style: italic;
+  color: #4a6a8a;
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+/* ===== STRAVA WIDGET ===== */
+.strava-widget {
+  border: 1px solid rgba(252,76,2,0.3);
+  border-radius: 10px;
+  padding: 1.5rem;
+  background: rgba(255,255,255,0.5);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin: 2rem 0;
+  flex-wrap: wrap;
+}
+.strava-logo {
+  width: 48px; height: 48px;
+  background: #fc4c02;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.strava-logo svg { width: 30px; height: 30px; fill: white; }
+.strava-stats { display: flex; gap: 2rem; flex-wrap: wrap; }
+.strava-stat { text-align: center; }
+.strava-stat-num {
+  font-family: var(--font-mono);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #fc4c02;
+}
+.strava-stat-label { font-size: 0.75rem; color: #4a6a8a; font-style: italic; }
+.strava-caption { font-size: 0.85rem; color: #4a6a8a; font-style: italic; margin-left: auto; align-self: flex-end; }
+
+.strava-map-placeholder {
+  margin-top: 1rem;
+  height: 160px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #e8f4ea, #d0e8d4);
+  border: 1px solid rgba(30,150,50,0.2);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.strava-route-svg { width: 100%; height: 100%; position: absolute; inset: 0; }
+
+@keyframes drawRoute {
+  to { stroke-dashoffset: 0; }
+}
+
+/* ===== FUTURE / PATHS ===== */
+.future-intro {
+  font-size: 1.15rem;
+  font-style: italic;
+  color: var(--silver);
+  line-height: 1.8;
+  max-width: 600px;
+  margin-bottom: 3rem;
+  font-weight: 300;
+}
+
+.paths-svg-wrap { width: 100%; overflow: visible; margin-bottom: 2rem; }
+.branch-svg { width: 100%; height: 180px; }
+.branch-line {
+  stroke: var(--locked-color);
+  stroke-width: 1.5;
+  fill: none;
+  stroke-dasharray: 6 4;
+  animation: dash-flow 3s linear infinite;
+}
+.branch-node { fill: var(--night-bg); stroke: var(--locked-color); stroke-width: 1.5; }
+.branch-node-glow {
+  fill: none;
+  stroke: var(--locked-glow);
+  stroke-width: 0.5;
+  opacity: 0;
+  animation: node-pulse 3s ease-in-out infinite;
+}
+@keyframes node-pulse {
+  0%, 100% { opacity: 0; }
+  50%       { opacity: 0.5; }
+}
+@keyframes dash-flow { to { stroke-dashoffset: -20; } }
+
+.path-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+.path-card {
+  border: 1px solid var(--locked-color);
+  border-radius: 10px;
+  padding: 1.5rem;
+  background: rgba(10,20,50,0.5);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+.path-card:hover { transform: translateY(-4px); border-color: var(--locked-glow); }
+.path-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(74,90,138,0.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+.path-card::after {
+  content: '';
+  position: absolute;
+  top: -50%; left: -60%;
+  width: 30%; height: 200%;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.03), transparent);
+  transform: skewX(-15deg);
+  animation: shimmer 6s ease-in-out infinite;
+  animation-delay: var(--shim-delay, 0s);
+}
+@keyframes shimmer {
+  0%, 100% { left: -60%; }
+  50%       { left: 130%; }
+}
+
+.lock-badge {
+  position: absolute;
+  top: 1rem; right: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--locked-glow);
+  background: rgba(74,90,138,0.2);
+  border: 1px solid var(--locked-color);
+  border-radius: 3px;
+  padding: 0.2rem 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.path-star { font-size: 1.5rem; margin-bottom: 0.8rem; opacity: 0.6; }
+.path-title {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  letter-spacing: 0.06em;
+  color: rgba(200,180,240,0.7);
+  margin-bottom: 0.5rem;
+}
+.path-desc {
+  font-size: 0.9rem;
+  font-style: italic;
+  color: rgba(176,184,201,0.6);
+  line-height: 1.65;
+  font-weight: 300;
+}
+.path-unlock-hint {
+  margin-top: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: rgba(176,184,201,0.35);
+  text-transform: uppercase;
+}
+
+/* ===== PAST IMAGE GALLERIES ===== */
+.gallery-section { margin: 2rem 0 3rem; }
+.gallery-section-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0.6;
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.gallery-section-label::before, .gallery-section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(200,170,100,0.2);
+}
+.img-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.8rem;
+}
+.img-grid img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid rgba(200,170,100,0.12);
+  transition: transform 0.4s ease, border-color 0.3s ease, box-shadow 0.4s ease;
+  display: block;
+}
+.img-grid img:hover {
+  transform: scale(1.04) translateY(-4px);
+  border-color: rgba(200,170,100,0.4);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.5);
+  z-index: 10;
+  position: relative;
+}
+@media (max-width: 640px) {
+  .img-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ===== PRESENT GRID (index.html style) ===== */
+.present-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+.present-card {
+  border: 1px solid rgba(30,100,180,0.2);
+  border-radius: 10px;
+  padding: 2rem 1.5rem;
+  background: rgba(255,255,255,0.35);
+  backdrop-filter: blur(6px);
+  text-align: left;
+  transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
+.present-card:hover {
+  transform: translateY(-5px);
+  background: rgba(255,255,255,0.6);
+  box-shadow: 0 12px 32px rgba(30,100,180,0.12);
+}
+.present-card-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--text-day);
+  margin-bottom: 0.8rem;
+  letter-spacing: 0.05em;
+}
+.present-card-body {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.88rem;
+  color: #3a5a7a;
+  line-height: 1.7;
+  font-weight: 400;
+}
+@media (max-width: 640px) {
+  .present-grid { grid-template-columns: 1fr; }
+}
+
+
+@media (max-width: 640px) {
+  .path-cards { grid-template-columns: 1fr; }
+  .strava-widget { flex-direction: column; align-items: flex-start; }
+  .strava-stats { gap: 1rem; }
+  .strava-caption { margin-left: 0; }
+  .hero-name { font-size: 2.5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== RADIO STATE INPUTS (must be siblings of nav & content) ===== -->
+<input type="radio" name="nav-state" id="state-past" checked>
+<input type="radio" name="nav-state" id="state-present">
+<input type="radio" name="nav-state" id="state-future">
+
+<!-- ===== SKY / BACKGROUND ===== -->
+<div class="sky-gradient"></div>
+<div class="stars-layer"></div>
+<div class="shooting-star" style="top:15%; left:5%;  --shoot-delay:0s;  --shoot-dur:8s;"></div>
+<div class="shooting-star" style="top:30%; left:20%; --shoot-delay:4s;  --shoot-dur:10s;"></div>
+<div class="shooting-star" style="top:10%; left:60%; --shoot-delay:7s;  --shoot-dur:9s;"></div>
+<div class="moon"></div>
+<div class="sun"></div>
+
+<!-- ===== NAV ===== -->
+<nav class="main-nav">
+  <div class="nav-track">
+    <label for="state-past"    class="nav-label">Past</label>
+    <label for="state-present" class="nav-label">Present</label>
+    <label for="state-future"  class="nav-label">Future</label>
+  </div>
+</nav>
+
+  <!-- ========== PAST ========== -->
+  <div class="panel" id="panel-past">
+    <div class="section-inner">
+
+      <div class="hero fade-up" style="--fd:0.1s">
+        <p class="hero-eyebrow">— A Journey Through Time —</p>
+        <h1 class="hero-name">Prasanna</h1>
+        <p class="hero-sub">From where I came, to where I stand, to where the stars may lead</p>
+        <div class="scroll-cue">✦ &nbsp; Scroll to begin &nbsp; ✦</div>
+      </div>
+
+      <div class="star-divider"><span>✦</span></div>
+
+      <div class="fade-up" style="--fd:0.2s">
+        <p class="section-label">Chronicles</p>
+        <h2 class="section-title">Past Experiences</h2>
+      </div>
+
+      <div class="timeline fade-up" style="--fd:0.3s">
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <p class="timeline-year">Early Years</p>
+          <h3 class="timeline-title">Roots in Pokhara</h3>
+          <p class="timeline-desc">Grew up in the unexpected weather of Pokhara — a city that taught me beauty lives in the unexpected. The Himalayas as a backdrop, the chaos of Fewa as a playground.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <p class="timeline-year">School Years</p>
+          <h3 class="timeline-title">Academic Foundations</h3>
+          <p class="timeline-desc">Discovered a love for problem-solving and creative thinking. Science fairs to fictional stories like Percy Jackson shaped a curious mind that questions everything.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <p class="timeline-year">First Steps</p>
+          <h3 class="timeline-title">Early Work &amp; Projects</h3>
+          <p class="timeline-desc">First forays into real-world work — internships, side projects, and the occasional failure that taught more than any classroom. Learning that competence is just persistence made visible.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <p class="timeline-year">Recent Past</p>
+          <h3 class="timeline-title">Growth &amp; Exploration</h3>
+          <p class="timeline-desc">Broadened horizons through travel, new skills, and deliberate discomfort. Discovered that identity is not fixed — it is chosen, and chosen again, each morning.</p>
+        </div>
+      </div>
+
+      <div class="star-divider fade-up" style="--fd:0.4s"><span>✦</span></div>
+
+      <!-- IMAGE GALLERIES -->
+      <div class="gallery-section fade-up" style="--fd:0.42s">
+        <div class="gallery-section-label">The Child</div>
+        <div class="img-grid">
+          <img src="neededimage/meandmom.JPG" alt="Me and Mom">
+          <img src="neededimage/mom2.jpg" alt="Me and Mom">
+          <img src="neededimage/mom3.jpg" alt="Me and Mom">
+        </div>
+      </div>
+
+      <div class="gallery-section fade-up" style="--fd:0.45s">
+        <div class="gallery-section-label">Family</div>
+        <div class="img-grid">
+          <img src="neededimage/3together.JPG" alt="Family">
+          <img src="neededimage/3together2.JPG" alt="Family">
+          <img src="neededimage/4together.JPG" alt="Family">
+          <img src="neededimage/mummybaba.JPG" alt="Mummy and Baba">
+          <img src="neededimage/sis1.jpg" alt="Sister and me">
+          <img src="neededimage/dance.JPG" alt="Parents dancing">
+        </div>
+      </div>
+
+      <div class="gallery-section fade-up" style="--fd:0.48s">
+        <div class="gallery-section-label">Inspirations</div>
+        <div class="img-grid">
+          <img src="neededimage/baba.JPG" alt="Baba">
+          <img src="neededimage/batman.jpg" alt="Batman">
+          <img src="neededimage/mahorago.jpg" alt="Mahorago">
+          <img src="neededimage/gohan.jpg" alt="Gohan">
+          <img src="neededimage/god.jpg" alt="God">
+          <img src="neededimage/spidy.jpg" alt="Spiderman">
+        </div>
+      </div>
+
+
+        <p class="section-label">Constellations</p>
+        <h2 class="section-title">People of My Past</h2>
+      </div>
+
+      <div class="people-era-label fade-up" style="--fd:0.55s">Those who shaped me</div>
+
+      <div class="people-grid fade-up" style="--fd:0.6s">
+        <div class="person-card">
+          <div class="person-avatar">BA</div>
+          <p class="person-name">Baba</p>
+          <p class="person-tag">family · inspiration</p>
+          <p class="person-note">The quiet strength behind every decision. A presence that showed me what dignity and work ethic look like in daily life — without ever needing to say so.</p>
+        </div>
+        <div class="person-card">
+          <div class="person-avatar">MA</div>
+          <p class="person-name">Mummy</p>
+          <p class="person-tag">family · foundation</p>
+          <p class="person-note">Her warmth is the first thing I remember and the last thing I hold onto when things get hard. The original reason I believe people are fundamentally good.</p>
+        </div>
+        <div class="person-card">
+          <div class="person-avatar">SI</div>
+          <p class="person-name">Sister</p>
+          <p class="person-tag">family · confidante</p>
+          <p class="person-note">We grew up sharing the same walls and eventually the same sense of humour. The kind of bond that survives distance and silence without explanation.</p>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /panel-past -->
+
+  <!-- ========== PRESENT ========== -->
+  <div class="panel" id="panel-present">
+    <div class="section-inner">
+
+      <div class="fade-up" style="--fd:0.1s">
+        <p class="section-label">Right now</p>
+        <h2 class="section-title">Present Day</h2>
+      </div>
+
+      <div class="fade-up" style="--fd:0.2s">
+        <p style="font-size:1.15rem; font-style:italic; color:#4a7aaa; margin-bottom:1.8rem; font-weight:300; line-height:1.8;">
+          Life is full, and deliberately so. Here is where my time and energy live right now.
+        </p>
+      </div>
+
+      <!-- index.html style present grid -->
+      <div class="present-grid fade-up" style="--fd:0.3s">
+        <div class="present-card">
+          <p class="present-card-title">Body 🏃‍♂️</p>
+          <p class="present-card-body">Early mornings, empty streets, and the meditative rhythm of footfalls. Training consistently — Strava keeps me honest.</p>
+        </div>
+        <div class="present-card">
+          <p class="present-card-title">Mind 📚</p>
+          <p class="present-card-body">Philosophy, fiction, and the occasional rabbit hole. Currently: anything that questions the obvious.</p>
+        </div>
+        <div class="present-card">
+          <p class="present-card-title">Cooking 🍳</p>
+          <p class="present-card-body">Experimenting with Nepali recipes passed down and new ones invented. Food as a form of attention.</p>
+        </div>
+      </div>
+
+      <!-- Strava -->
+      <div class="fade-up" style="--fd:0.3s">
+        <p style="font-family:'Space Mono',monospace; font-size:0.65rem; letter-spacing:0.25em; text-transform:uppercase; color:#185fa5; opacity:0.6; margin-bottom:1rem;">On Strava</p>
+      </div>
+
+      <div class="strava-widget fade-up" style="--fd:0.35s">
+        <div class="strava-logo">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7 13.828h4.169"/>
+          </svg>
+        </div>
+        <div class="strava-stats">
+          <div class="strava-stat">
+            <div class="strava-stat-num">148</div>
+            <div class="strava-stat-label">km this month</div>
+          </div>
+          <div class="strava-stat">
+            <div class="strava-stat-num">23</div>
+            <div class="strava-stat-label">runs this year</div>
+          </div>
+          <div class="strava-stat">
+            <div class="strava-stat-num">5:42</div>
+            <div class="strava-stat-label">avg pace/km</div>
+          </div>
+          <div class="strava-stat">
+            <div class="strava-stat-num">2,100m</div>
+            <div class="strava-stat-label">elevation gained</div>
+          </div>
+        </div>
+        <div class="strava-caption">Pokhara Valley</div>
+      </div>
+
+      <div class="strava-map-placeholder fade-up" style="--fd:0.4s">
+        <svg class="strava-route-svg" viewBox="0 0 800 160" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <linearGradient id="terrainGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#b8d8be" stop-opacity="0.4"/>
+              <stop offset="100%" stop-color="#8cbf96" stop-opacity="0.7"/>
+            </linearGradient>
+          </defs>
+          <path d="M0,120 Q100,90 200,100 Q300,110 400,80 Q500,55 600,70 Q700,85 800,65" stroke="#7ab588" stroke-width="0.8" fill="none" opacity="0.4"/>
+          <path d="M0,140 Q120,110 220,125 Q350,135 450,105 Q560,80 660,95 Q750,105 800,90" stroke="#7ab588" stroke-width="0.8" fill="none" opacity="0.3"/>
+          <path d="M40,130 L80,115 L120,100 L170,85 L220,90 L270,75 L320,60 L380,55 L430,65 L490,50 L550,60 L600,45 L650,55 L700,40 L750,35 L800,45"
+                stroke="#fc4c02" stroke-width="3" fill="none" stroke-linecap="round"
+                stroke-dasharray="1200" stroke-dashoffset="1200"
+                style="animation: drawRoute 3s ease forwards 0.5s;"/>
+          <circle cx="40" cy="130" r="6" fill="#fc4c02"/>
+          <circle cx="40" cy="130" r="10" fill="none" stroke="#fc4c02" stroke-width="1.5" opacity="0.4"/>
+        </svg>
+        <p style="font-size:0.75rem; font-style:italic; color:#4a6a4a; z-index:2; text-align:center; padding: 0 1rem;">
+          Pokhara Valley trails — Phewa Lake to Sarangkot loop
+        </p>
+      </div>
+
+    </div>
+  </div><!-- /panel-present -->
+
+  <!-- ========== FUTURE ========== -->
+  <div class="panel" id="panel-future">
+    <div class="section-inner">
+
+      <div class="fade-up" style="--fd:0.1s">
+        <p class="section-label">What May Come</p>
+        <h2 class="section-title">The Paths Ahead</h2>
+      </div>
+
+      <p class="future-intro fade-up" style="--fd:0.2s">
+        The future is a night sky I haven't yet named — full of constellations waiting to be traced.
+        These paths exist as possibilities, not promises. Each one is locked to the present moment,
+        and will only open when the time arrives.
+      </p>
+
+      <div class="paths-svg-wrap fade-up" style="--fd:0.25s">
+        <svg class="branch-svg" viewBox="0 0 800 180" preserveAspectRatio="xMidYMid meet">
+          <circle cx="400" cy="20" r="8" class="branch-node"/>
+          <circle cx="400" cy="20" r="14" class="branch-node-glow" style="animation-delay:0s"/>
+          <line x1="400" y1="28" x2="400" y2="70" class="branch-line"/>
+          <path d="M400,70 Q200,70 130,120" class="branch-line" style="animation-delay:0.3s"/>
+          <path d="M400,70 L400,120" class="branch-line" style="animation-delay:0.6s"/>
+          <path d="M400,70 Q600,70 670,120" class="branch-line" style="animation-delay:0.9s"/>
+          <circle cx="130" cy="128" r="8" class="branch-node"/>
+          <circle cx="130" cy="128" r="14" class="branch-node-glow" style="animation-delay:1s"/>
+          <circle cx="400" cy="128" r="8" class="branch-node"/>
+          <circle cx="400" cy="128" r="14" class="branch-node-glow" style="animation-delay:1.4s"/>
+          <circle cx="670" cy="128" r="8" class="branch-node"/>
+          <circle cx="670" cy="128" r="14" class="branch-node-glow" style="animation-delay:1.8s"/>
+          <text x="130" y="155" text-anchor="middle" font-family="'Space Mono',monospace" font-size="9" fill="#3a4a6a" letter-spacing="1">CRAFT</text>
+          <text x="400" y="155" text-anchor="middle" font-family="'Space Mono',monospace" font-size="9" fill="#3a4a6a" letter-spacing="1">EXPLORATION</text>
+          <text x="670" y="155" text-anchor="middle" font-family="'Space Mono',monospace" font-size="9" fill="#3a4a6a" letter-spacing="1">ROOTS</text>
+          <text x="400" y="14" text-anchor="middle" font-family="'Space Mono',monospace" font-size="9" fill="#4a5a8a" letter-spacing="1">NOW</text>
+        </svg>
+      </div>
+
+      <div class="path-cards fade-up" style="--fd:0.35s">
+        <div class="path-card" style="--shim-delay:0s">
+          <div class="lock-badge"><span class="lock-icon">🔒</span> Locked</div>
+          <div class="path-star">★</div>
+          <p class="path-title">The Digital Architect</p>
+          <p class="path-desc">Deepening roots in software and design to build tools that feel like second nature to the user. Engineering experiences that bridge complex logic and human intuition — a commitment to the long game of mastering craft.</p>
+          <p class="path-unlock-hint">Unlocks with 10,000 hours of deliberate practice.</p>
+        </div>
+        <div class="path-card" style="--shim-delay:2s">
+          <div class="lock-badge"><span class="lock-icon">🔒</span> Locked</div>
+          <div class="path-star">✦</div>
+          <p class="path-title">The Global Explorer</p>
+          <p class="path-desc">Taking gathered skills and applying them to a completely new context — perhaps a different continent or industry. The courage to be a beginner again in a place where no one knows my name, expanding understanding by living at the edges.</p>
+          <p class="path-unlock-hint">Unlocks when the comfort zone becomes too small.</p>
+        </div>
+        <div class="path-card" style="--shim-delay:4s">
+          <div class="lock-badge"><span class="lock-icon">🔒</span> Locked</div>
+          <div class="path-star">◈</div>
+          <p class="path-title">The Local Catalyst</p>
+          <p class="path-desc">Returning to the winding alleys of home with a global perspective and a toolkit for change. Mentorship and local impact — investing back into Nepal's creative and tech community so the next generation sees the stars more clearly.</p>
+          <p class="path-unlock-hint">Unlocks with the wisdom of the journey.</p>
+        </div>
+      </div>
+
+      <div class="star-divider" style="opacity:0.15; margin-top:3rem;"><span>✦</span></div>
+
+      <p style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.1rem; color:rgba(176,184,201,0.45); text-align:center; margin-top:2rem; line-height:1.9; font-weight:300;">
+        All paths are real. All paths are possible.<br>
+        The stars do not hurry — and neither must I.
+      </p>
+
+    </div>
+  </div><!-- /panel-future -->
+
+</body>
+</html>
